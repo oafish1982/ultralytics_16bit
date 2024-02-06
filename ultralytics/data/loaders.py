@@ -342,7 +342,13 @@ class LoadImages:
         else:
             # Read image
             self.count += 1
-            im0 = cv2.imread(path)  # BGR
+            # im0 = cv2.imread(path)  # BGR
+            im0 = cv2.imread(path, cv2.IMREAD_UNCHANGED)  # BGR
+            if im0.dtype == np.uint16:
+                # Convert the image to int16
+                im0 = im0.astype(np.float32)
+                im0 = im0 / 255.0
+                im0=cv2.merge([im0,im0,im0])
             if im0 is None:
                 raise FileNotFoundError(f"Image Not Found {path}")
             s = f"image {self.count}/{self.nf} {path}: "

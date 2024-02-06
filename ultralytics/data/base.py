@@ -152,9 +152,24 @@ class BaseDataset(Dataset):
                 except Exception as e:
                     LOGGER.warning(f"{self.prefix}WARNING ⚠️ Removing corrupt *.npy image file {fn} due to: {e}")
                     Path(fn).unlink(missing_ok=True)
-                    im = cv2.imread(f)  # BGR
+                    im = cv2.imread(f, cv2.IMREAD_UNCHANGED)  # BGR
+                    if im.dtype == np.uint16:
+                        # Convert the image to int16
+                        im = im.astype(np.float32)
+                        im = im / 255.0
+                        im = cv2.merge([im, im, im])
+                    # Convert the image to three channels
+
+
             else:  # read image
-                im = cv2.imread(f)  # BGR
+                im = cv2.imread(f, cv2.IMREAD_UNCHANGED)  # BGR
+                if im.dtype == np.uint16:
+                    # Convert the image to int16
+                    im = im.astype(np.float32)
+                    im = im / 255.0
+                    im = cv2.merge([im, im, im])
+                # Convert the image to three channels
+
             if im is None:
                 raise FileNotFoundError(f"Image Not Found {f}")
 
@@ -248,6 +263,9 @@ class BaseDataset(Dataset):
 
     def __getitem__(self, index):
         """Returns transformed label information for given index."""
+        # y = self.get_image_and_label(index)
+        # x = self.transforms(y)
+        # print(x,self.transforms)
         return self.transforms(self.get_image_and_label(index))
 
     def get_image_and_label(self, index):

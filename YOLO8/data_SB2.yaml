@@ -1,0 +1,6 @@
+train: /home/ubuntu/DataSet/onlyre/train/images
+val: /home/ubuntu/DataSet/onlyre/test/images
+test: /home/ubuntu/DataSet/onlyre/test/images
+
+nc: 1
+names: ['solder ball']

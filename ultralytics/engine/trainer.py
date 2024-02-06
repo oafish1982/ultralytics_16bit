@@ -234,6 +234,7 @@ class BaseTrainer:
         # Model
         self.run_callbacks("on_pretrain_routine_start")
         ckpt = self.setup_model()
+        # self.model = self.model.to(dtype=torch.float64, device=self.device)
         self.model = self.model.to(self.device)
         self.set_model_attributes()
 
