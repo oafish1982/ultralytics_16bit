@@ -1,0 +1,4 @@
+train 直接运行train.py文件,修改train参数可以在train的时候直接修改model.train(data='/home/ubuntu/GITHUG/ultralytics/YOLO8/FULL_middle_png.yaml', workers=1,
+                      epochs=300, imgsz=1280, device=[0, 1], optimizer="Adam", lr0=0.001, hsv_h=0.0, hsv_s=0.0,
+                      hsv_v=0.0, batch=4, amp=True, patience=100)参数 train 2560的图像时直接修改imgsz
+predict 直接运行predict文件
